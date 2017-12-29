@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <link rel="stylesheet" href={% static 'login/css/style.css' %} >
+    <link rel="stylesheet" href={% static 'login/css/bind.css' %} >
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+    .col-center-block {
+    float: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    }
+  </style>
+</head>
+    <body class="login-page">
+        <div class="login-form">
+            {% if user_pw_error == '1' %}
+                <div class="container">
+                    <div class="col-xs-6 col-md-4 col-center-block">
+                        <div class="alert alert-danger in fade" role="alert">
+                            <!--添加关闭按钮-->
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>用户名或密码错误，请重试</strong>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="text-center">
+            <h2 style="color: lightskyblue; font-family:sans-serif;">欢迎使用</h2>
+            </div>
+            <div class="login-content">
+
+			<form method="post" role="form" id="form_login">
+
+				<div class="form-group">
+
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-user"></i>
+						</div>
+
+						<input type="text" class="form-control" name="username" id="username" placeholder="Username" autocomplete="off" />
+					</div>
+
+				</div>
+
+				<div class="form-group">
+
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-key"></i>
+						</div>
+
+						<input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off" />
+					</div>
+
+				</div>
+
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-block ">
+						<i class="fa fa-sign-in"></i>
+						登录
+					</button>
+
+                    <h6></h6>
+                    <!--由于login不是一个文件夹，所以此处返回login文件所在文件夹，在定位到该文件夹下的register文件-->
+                    <!--<a href="#" id="regbotton">../register
+                    <button type="button" class="btn btn-primary btn-block " >
+						<i class="fa fa-sign-in"></i>
+						注册
+					</button>
+                     </a>-->
+				</div>
+
+			</form>
+
+		</div>
+        </div>
+        <div id="LoginBox">
+            <div class="row1">
+                注册账号
+                <a href="javascript:void(0)" class="close_btn" id="closeBtn">x</a>
+            </div>
+                <form method="post" role="form" id="form_bind">
+                    <div class="row">
+                    用户名: <span class="inputBox"><input type="text" id="txtName" placeholder="账号/邮箱" /></span>
+                    <a href="javascript:void(0)" title="不能为空" class="warning" id="warn">*</a>
+                    </div>
+                    <div class="row">
+                    密&nbsp;&nbsp;&nbsp;&nbsp;码: <span class="inputBox"><input type="text" id="txtPwd" placeholder="密码" /></span>
+                    <a href="javascript:void(0)" title="不能为空" class="warning" id="warn2">*</a>
+                    </div>
+                    <div class="row">
+                    <!--href填入注册跳转函数对应的url-->
+                    <a href="#" id="loginbtn">注册</a>
+                    </div>
+                </form>
+        </div>
+        </div>
+        <script type="text/javascript">
+	    $(function ($) {
+		//弹出登录
+		    $("#regbotton").hover(function () {
+			    $(this).stop().animate({
+			    	opacity: '1'
+		    	}, 600);
+		    }, function () {
+			    $(this).stop().animate({
+			    	opacity: '0.6'
+			    }, 1000);
+		    }).on('click', function () {
+			    $("body").append("<div id='mask'></div>");
+			    $("#mask").addClass("mask").fadeIn("slow");
+			    $("#LoginBox").fadeIn("slow");
+		    });
+		//
+		    //按钮的透明度
+		    $("#loginbtn").hover(function () {
+			    $(this).stop().animate({
+				    opacity: '1'
+			    }, 600);
+		    }, function () {
+			    $(this).stop().animate({
+				    opacity: '0.8'
+			    }, 1000);
+		    });
+		    //文本框不允许为空---按钮触发
+		    $("#loginbtn").on('click', function () {
+			    var txtName = $("#txtName").val();
+			    var txtPwd = $("#txtPwd").val();
+			    if (txtName == "" || txtName == undefined || txtName == null) {
+				    if (txtPwd == "" || txtPwd == undefined || txtPwd == null) {
+					    $(".warning").css({ display: 'block' });
+				    }
+				    else {
+					    $("#warn").css({ display: 'block' });
+					    $("#warn2").css({ display: 'none' });
+				    }
+			    }
+			    else {
+				    if (txtPwd == "" || txtPwd == undefined || txtPwd == null) {
+					    $("#warn").css({ display: 'none' });
+					    $(".warn2").css({ display: 'block' });
+				    }
+				    else {
+					    $(".warning").css({ display: 'none' });
+				    }
+			    }
+		    });
+		    //文本框不允许为空---单个文本触发
+		    $("#txtName").on('blur', function () {
+			    var txtName = $("#txtName").val();
+			    if (txtName == "" || txtName == undefined || txtName == null) {
+				    $("#warn").css({ display: 'block' });
+			    }
+			    else {
+				    $("#warn").css({ display: 'none' });
+			    }
+		    });
+		    $("#txtName").on('focus', function () {
+			    $("#warn").css({ display: 'none' });
+		    });
+		    //
+		    $("#txtPwd").on('blur', function () {
+			    var txtName = $("#txtPwd").val();
+			    if (txtName == "" || txtName == undefined || txtName == null) {
+				    $("#warn2").css({ display: 'block' });
+			    }
+			    else {
+				    $("#warn2").css({ display: 'none' });
+			    }
+		    });
+		    $("#txtPwd").on('focus', function () {
+			    $("#warn2").css({ display: 'none' });
+		    });
+		    //关闭
+		    $(".close_btn").hover(function () { $(this).css({ color: 'black' }) }, function () { $(this).css({ color: '#999' }) }).on('click', function () {
+			    $("#LoginBox").fadeOut("fast");
+			    $("#mask").css({ display: 'none' });
+		    });
+	    });
+	    </script>
+        </div>
+    </body>
+</html>

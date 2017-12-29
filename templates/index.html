@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{% load staticfiles %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Get Data</title>
+        <link rel="stylesheet" href={% static 'bootstrap/css/bootstrap.css' %}>
+        <link rel="stylesheet" href={% static 'bootstrap/css/bootstrap-theme.css' %}>
+        <script src={% static 'bootstrap/js/bootstrap.js' %}></script>
+        <script src={% static 'bootstrap/js/npm.js' %}></script>
+
+        <script type="text/javascript">
+            function submitForm(){
+            var form = document.getElementById("dev_name_form");
+            form.submit();
+            }
+        </script>
+    </head>
+
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <!--col-xs超小屏幕占10列，col-md大屏幕也占10列-->
+                <div class="col-xs-10 col-md-10">
+                    <!--action指向向何处发送该表单-->
+                    <form id="dev_name_form" method ="post" action="\">
+	                    <select name="dev_name_select" onChange="submitForm();">
+                        {% for name in dev_name %}
+		                <option value="{{name}}">{{name}}</option>
+                        {% endfor %}
+                        <option value="99999">ALL</option>
+                        <option selected=" "></option>
+	                    </select>
+	                </form>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <div class="btn-group" role = "group">
+                        <!--此处连接了urls.py中的outlogin那条规则-->
+                        <a href="../outlogin">
+                        <button class="btn btn-default btn-sm" type="button" >{{ user }}退出</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% for name in names%}
+                <p>
+                &nbsp{{name.device_id}}
+                &nbsp{{name.device_name_foreign_id}}
+                &nbsp{{name.device_intodepot_time}}
+                &nbsp{{name.device_location_mode}}
+                &nbsp{{name.device_location_wifi_mac}}
+                &nbsp{{name.device_payload}}
+                </p>
+                {% endfor %}
+            </div>
+        </div>
+
+    </body>
+</html>
